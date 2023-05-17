@@ -7,6 +7,7 @@ import {
 	ManyToOne,
 } from "typeorm";
 import { UserEntity } from "./User";
+import { IsNotEmpty, IsString, MinLength } from "class-validator";
 
 @Entity()
 export class PostEntity {
@@ -14,6 +15,11 @@ export class PostEntity {
 	id: number;
 
 	@Column()
+	@IsNotEmpty()
+	@IsString()
+	@MinLength(5, {
+		message: "Post is too short",
+	})
 	description: string;
 
 	@Column()
