@@ -25,10 +25,10 @@ export class PostEntity {
 	@Column()
 	imageUrl: string;
 
-	@CreateDateColumn()
+	@CreateDateColumn({ type: "timestamp" })
 	createdDate: Date;
 
-	@UpdateDateColumn()
+	@UpdateDateColumn({ type: "timestamp" })
 	updatedDate: Date;
 
 	@ManyToOne(() => UserEntity, (user) => user.posts)

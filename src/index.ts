@@ -1,11 +1,14 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
+import * as swaggerUi from "swagger-ui-express";
+import * as swaggerDocument from "./swagger.json";
 
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
 import { Routes } from "./routes";
 import { UserEntity } from "./entity/User";
+import { PostEntity } from "./entity/Post";
 
 AppDataSource.initialize()
 	.then(async () => {
@@ -14,6 +17,7 @@ AppDataSource.initialize()
 		app.use(cors());
 		app.use(bodyParser.json());
 
+		app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 		// register express routes from defined application routes
 		Routes.forEach((route) => {
 			(app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
@@ -50,6 +54,24 @@ AppDataSource.initialize()
 				email: "phantom@fsfg.rt",
 				password: "12345",
 				posts: [],
+			})
+		);
+
+		await AppDataSource.manager.save(
+			AppDataSource.manager.create(PostEntity, {
+				description: "TimberTimberTimberTimberTimberTimberTimberTimberTimberTimberTimberTimberTimberTimber",
+				imageUrl: "",
+				createdDate: new Date(Date.now()),
+				updatedDate: new Date(Date.now()),
+			})
+		);
+
+		await AppDataSource.manager.save(
+			AppDataSource.manager.create(PostEntity, {
+				description: "PhantoPhantomPhantomPhantomPhantomPhantomPhantomPhantomPhantomPhantomPhantomPhantomm",
+				imageUrl: "",
+				createdDate: new Date(Date.now()),
+				updatedDate: new Date(Date.now()),
 			})
 		);
 
