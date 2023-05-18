@@ -36,6 +36,13 @@ export class UserController {
 		return this.userRepository.save(user);
 	}
 
+	async update(request: Request, response: Response, next: NextFunction) {
+		const { id, updateUserDto } = request.body;
+
+		const newUser = await this.userRepository.update(id, updateUserDto);
+		return newUser;
+	}
+
 	async remove(request: Request, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
 

@@ -6,7 +6,7 @@ export class PostController {
 	private postRepository = AppDataSource.getRepository(PostEntity);
 
 	async all(request: Request, response: Response, next: NextFunction) {
-		return this.postRepository.find();
+		return response.send(this.postRepository.find());
 	}
 
 	async one(request: Request, response: Response, next: NextFunction) {
@@ -23,16 +23,23 @@ export class PostController {
 	}
 
 	async save(request: Request, response: Response, next: NextFunction) {
-		const { description, imageUrl, createdDate, updatedDate } = request.body;
+		const { content, imageUrl, createdDate, updatedDate } = request.body;
 
 		const post = Object.assign(new PostEntity(), {
-			description,
+			content,
 			imageUrl,
 			createdDate,
 			updatedDate,
 		});
 
-		return this.postRepository.save(post);
+		return response.send(this.postRepository.save(post));
+	}
+
+	async update(request: Request, response: Response, next: NextFunction) {
+		const { id, updatePostDto } = request.body;
+
+		const newPost = await this.postRepository.update(id, updatePostDto);
+		return newPost;
 	}
 
 	async remove(request: Request, response: Response, next: NextFunction) {
