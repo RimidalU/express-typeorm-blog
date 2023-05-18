@@ -36,6 +36,12 @@ export const Routes = [
 		action: "save",
 	},
 	{
+		method: "patch",
+		route: "/users/:id",
+		controller: UserController,
+		action: "update",
+	},
+	{
 		method: "delete",
 		route: "/users/:id",
 		controller: UserController,
@@ -59,6 +65,12 @@ export const Routes = [
 		route: "/posts",
 		controller: PostController,
 		action: "save",
+	},
+	{
+		method: "patch",
+		route: "/posts/:id",
+		controller: PostController,
+		action: "update",
 	},
 	{
 		method: "delete",
