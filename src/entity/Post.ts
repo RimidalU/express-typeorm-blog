@@ -20,17 +20,17 @@ export class PostEntity {
 	@MinLength(5, {
 		message: "Post is too short",
 	})
-	description: string;
+	content: string;
 
 	@Column()
 	imageUrl: string;
 
 	@CreateDateColumn({ type: "timestamp" })
-	createdDate: Date;
+	createdAt: Date;
 
 	@UpdateDateColumn({ type: "timestamp" })
-	updatedDate: Date;
+	updatedAt: Date;
 
 	@ManyToOne(() => UserEntity, (user) => user.posts)
-	user: UserEntity;
+	owner: UserEntity;
 }

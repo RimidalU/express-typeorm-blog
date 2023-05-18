@@ -32,7 +32,7 @@ export class UserEntity {
 	})
 	password: string;
 
-	@OneToMany(() => PostEntity, (post: PostEntity) => post.user)
+	@OneToMany(() => PostEntity, (post: PostEntity) => post.owner)
     @IsArray()
 	posts: PostEntity[];
 }
