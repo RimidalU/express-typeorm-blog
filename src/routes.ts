@@ -1,7 +1,22 @@
 import { UserController } from "./controller/UserController";
 import { PostController } from "./controller/PostController";
+import { AuthController } from "./controller/AuthController";
 
 export const Routes = [
+	//auth
+	{
+		method: "get",
+		route: "/auth/login",
+		controller: AuthController,
+		action: "login",
+	},
+	{
+		method: "get",
+		route: "/auth/signup",
+		controller: AuthController,
+		action: "signup",
+	},
+	//users
 	{
 		method: "get",
 		route: "/users",
@@ -26,6 +41,7 @@ export const Routes = [
 		controller: UserController,
 		action: "remove",
 	},
+	//posts
 	{
 		method: "get",
 		route: "/posts",
