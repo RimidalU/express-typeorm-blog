@@ -1,0 +1,215 @@
+{
+	"openapi": "3.0.3",
+	"info": {
+		"title": "Blog API",
+		"version": "1.0.0",
+		"description": "My blog API"
+	},
+	"paths": {
+		"/users/{id}": {
+			"get": {
+				"operationId": "get_user",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["user"],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "integer"
+											},
+											"firstName": {
+												"type": "string"
+											},
+											"lastName": {
+												"type": "string"
+											},
+											"email": {
+												"type": "string"
+											},
+											"password": {
+												"type": "string"
+											},
+											"posts": {
+												"type": "array",
+												"items": {
+													"type": "integer"
+												}
+											}
+										},
+										"required": ["id", "firstName", "lastName", "email", "password"]
+									}
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"User": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer"
+					},
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"posts": {
+						"type": "array",
+						"items": {
+							"type": "integer"
+						}
+					}
+				},
+				"required": ["id", "firstName", "lastName", "email", "password"]
+			},
+			"CreateUser": {
+				"type": "object",
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": ["firstName", "lastName", "email", "password"]
+			},
+			"UpdateUser": {
+				"type": "object",
+				"properties": {
+					"firstName": {
+						"type": "string"
+					},
+					"lastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"posts": {
+						"type": "array",
+						"items": {
+							"type": "integer"
+						}
+					}
+				}
+			},
+			"Login": {
+				"type": "object",
+				"properties": {
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": ["email", "password"]
+			},
+			"Post": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer"
+					},
+					"owner": {
+						"type": "integer"
+					},
+					"content": {
+						"type": "string"
+					},
+					"imageUrl": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2017-07-21T17:32:28Z"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2017-07-21T17:32:28Z"
+					}
+				},
+				"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
+			},
+			"CreatePost": {
+				"type": "object",
+				"properties": {
+					"owner": {
+						"type": "integer"
+					},
+					"content": {
+						"type": "string"
+					},
+					"imageUrl": {
+						"type": "string"
+					}
+				},
+				"required": ["description", "owner"]
+			},
+			"UpdatePost": {
+				"type": "object",
+				"properties": {
+					"content": {
+						"type": "string"
+					},
+					"imageUrl": {
+						"type": "string"
+					}
+				}
+			}
+		},
+		"securitySchemes": {
+			"BearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "Opaque Access Token."
+			}
+		}
+	}
+}
