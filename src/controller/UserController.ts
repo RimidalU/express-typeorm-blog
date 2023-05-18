@@ -22,9 +22,7 @@ export class UserController {
 		return user;
 	}
 
-	async findByEmail(request: Request, response: Response, next: NextFunction) {
-		const { email } = request.body;
-
+	async findByEmail(email: string) {
 		const user = await this.userRepository.findOne({
 			where: { email },
 		});
@@ -37,6 +35,11 @@ export class UserController {
 
 	async save(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password } = request.body;
+
+		const isUserExist = await this.findByEmail(email);
+		if (isUserExist === "unregistered user") {
+			return "user with this email already exists";
+		}
 
 		const user = Object.assign(new UserEntity(), {
 			firstName,
