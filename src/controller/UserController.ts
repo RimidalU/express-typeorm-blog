@@ -5,15 +5,28 @@ import { UserEntity } from "../entity/User";
 export class UserController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
 
-	async all(request: Request, response: Response, next: NextFunction) {
-		return this.userRepository.find();
-	}
+	// async all(request: Request, response: Response, next: NextFunction) {
+	// 	return this.userRepository.find();
+	// }
 
 	async one(request: Request, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
 
 		const user = await this.userRepository.findOne({
 			where: { id },
+		});
+
+		if (!user) {
+			return "unregistered user";
+		}
+		return user;
+	}
+
+	async findByEmail(request: Request, response: Response, next: NextFunction) {
+		const { email } = request.body;
+
+		const user = await this.userRepository.findOne({
+			where: { email },
 		});
 
 		if (!user) {
@@ -44,7 +57,7 @@ export class UserController {
 			lastName,
 			password,
 		});
-		return newUser.affected ? 'user has been updated' : 'this user not updated';;
+		return newUser.affected ? "user has been updated" : "this user not updated";
 	}
 
 	async remove(request: Request, response: Response, next: NextFunction) {
