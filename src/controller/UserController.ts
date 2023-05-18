@@ -44,7 +44,7 @@ export class UserController {
 			lastName,
 			password,
 		});
-		return newUser;
+		return newUser.affected ? 'user has been updated' : 'this user not updated';;
 	}
 
 	async remove(request: Request, response: Response, next: NextFunction) {

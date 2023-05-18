@@ -40,7 +40,7 @@ export class PostController {
 		const { updatePostDto } = request.body;
 
 		const newPost = await this.postRepository.update(id, updatePostDto);
-		return newPost;
+		return newPost.affected ? 'post has been updated' : 'this post not updated';
 	}
 
 	async remove(request: Request, response: Response, next: NextFunction) {
