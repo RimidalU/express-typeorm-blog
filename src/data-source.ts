@@ -6,7 +6,6 @@ import { UserEntity } from "./entity/User";
 import { PostEntity } from "./entity/Post";
 
 dotenv.config()
-console.log(process.env.DB_HOST);
 
 export const AppDataSource = new DataSource({
 	type: "postgres",
