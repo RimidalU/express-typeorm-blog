@@ -36,7 +36,8 @@ export class PostController {
 	}
 
 	async update(request: Request, response: Response, next: NextFunction) {
-		const { id, updatePostDto } = request.body;
+		const id = parseInt(request.params.id);
+		const { updatePostDto } = request.body;
 
 		const newPost = await this.postRepository.update(id, updatePostDto);
 		return newPost;

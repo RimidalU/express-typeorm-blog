@@ -23,23 +23,27 @@ export class UserController {
 	}
 
 	async save(request: Request, response: Response, next: NextFunction) {
-		const { firstName, lastName, email, password, posts } = request.body;
+		const { firstName, lastName, email, password } = request.body;
 
 		const user = Object.assign(new UserEntity(), {
 			firstName,
 			lastName,
 			email,
 			password,
-			posts,
 		});
 
 		return this.userRepository.save(user);
 	}
 
 	async update(request: Request, response: Response, next: NextFunction) {
-		const { id, updateUserDto } = request.body;
+		const id = parseInt(request.params.id);
+		const { firstName, lastName, password } = request.body;
 
-		const newUser = await this.userRepository.update(id, updateUserDto);
+		const newUser = await this.userRepository.update(id, {
+			firstName,
+			lastName,
+			password,
+		});
 		return newUser;
 	}
 
