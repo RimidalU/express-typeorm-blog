@@ -319,6 +319,266 @@
 					}
 				}
 			}
+		},
+		"/posts": {
+			"post": {
+				"operationId": "create_post",
+				"tags": ["post"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"owner": {
+										"type": "integer"
+									},
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								},
+								"required": ["description", "owner"]
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"owner": {
+										"type": "integer"
+									},
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								},
+								"required": ["description", "owner"]
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"owner": {
+										"type": "integer"
+									},
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								},
+								"required": ["description", "owner"]
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Create Post",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "integer"
+										},
+										"owner": {
+											"type": "integer"
+										},
+										"content": {
+											"type": "string"
+										},
+										"imageUrl": {
+											"type": "string"
+										},
+										"createdAt": {
+											"type": "string",
+											"format": "date-time",
+											"example": "2017-07-21T17:32:28Z"
+										},
+										"updatedAt": {
+											"type": "string",
+											"format": "date-time",
+											"example": "2017-07-21T17:32:28Z"
+										}
+									},
+									"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		},
+		"/posts/{id}": {
+			"get": {
+				"operationId": "get_post_by_id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["post"],
+				"description": "Get Post",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "integer"
+											},
+											"owner": {
+												"type": "integer"
+											},
+											"content": {
+												"type": "string"
+											},
+											"imageUrl": {
+												"type": "string"
+											},
+											"createdAt": {
+												"type": "string",
+												"format": "date-time",
+												"example": "2017-07-21T17:32:28Z"
+											},
+											"updatedAt": {
+												"type": "string",
+												"format": "date-time",
+												"example": "2017-07-21T17:32:28Z"
+											}
+										},
+										"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
+									}
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			},
+			"patch": {
+				"operationId": "update_post",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["post"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"content": {
+										"type": "string"
+									},
+									"imageUrl": {
+										"type": "string"
+									}
+								}
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Create Post",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "No response body"
+					}
+				}
+			},
+			"delete": {
+				"operationId": "destroy_post",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["post"],
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"204": {
+						"description": "No response body"
+					}
+				}
+			}
 		}
 	},
 	"components": {

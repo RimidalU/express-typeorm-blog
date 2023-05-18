@@ -37,10 +37,13 @@ export class PostController {
 
 	async update(request: Request, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
-		const { updatePostDto } = request.body;
+		const { content, imageUrl } = request.body;
 
-		const newPost = await this.postRepository.update(id, updatePostDto);
-		return newPost.affected ? 'post has been updated' : 'this post not updated';
+		const newPost = await this.postRepository.update(id, {
+			content,
+			imageUrl,
+		});
+		return newPost.affected ? "post has been updated" : "this post not updated";
 	}
 
 	async remove(request: Request, response: Response, next: NextFunction) {
