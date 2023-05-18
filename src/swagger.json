@@ -6,9 +6,350 @@
 		"description": "My blog API"
 	},
 	"paths": {
+		"/users": {
+			"post": {
+				"operationId": "create_user",
+				"tags": ["user"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								},
+								"required": ["firstName", "lastName", "email", "password"]
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								},
+								"required": ["firstName", "lastName", "email", "password"]
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								},
+								"required": ["firstName", "lastName", "email", "password"]
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Create User",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "integer",
+											"example": 3
+										},
+										"firstName": {
+											"type": "string",
+											"example": "Liu"
+										},
+										"lastName": {
+											"type": "string",
+											"example": "Kang"
+										},
+										"email": {
+											"type": "string",
+											"format": "email",
+											"example": "kang@monk.com"
+										},
+										"password": {
+											"type": "string",
+											"example": "12345"
+										},
+										"posts": {
+											"type": "array",
+											"items": {
+												"type": "integer"
+											},
+											"example": [1, 7, 12]
+										}
+									},
+									"required": ["id", "firstName", "lastName", "email", "password"]
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		},
 		"/users/{id}": {
 			"get": {
-				"operationId": "get_user",
+				"operationId": "get_user_by_id",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["user"],
+				"description": "Get User",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "integer",
+												"example": 3
+											},
+											"firstName": {
+												"type": "string",
+												"example": "Liu"
+											},
+											"lastName": {
+												"type": "string",
+												"example": "Kang"
+											},
+											"email": {
+												"type": "string",
+												"format": "email",
+												"example": "kang@monk.com"
+											},
+											"password": {
+												"type": "string",
+												"example": "12345"
+											},
+											"posts": {
+												"type": "array",
+												"items": {
+													"type": "integer"
+												},
+												"example": [1, 7, 12]
+											}
+										},
+										"required": ["id", "firstName", "lastName", "email", "password"]
+									}
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			},
+			"patch": {
+				"operationId": "update_user",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"schema": {
+							"type": "integer"
+						},
+						"required": true
+					}
+				],
+				"tags": ["user"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								}
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								}
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"firstName": {
+										"type": "string",
+										"example": "Liu"
+									},
+									"lastName": {
+										"type": "string",
+										"example": "Kang"
+									},
+									"email": {
+										"type": "string",
+										"format": "email",
+										"example": "kang@monk.com"
+									},
+									"password": {
+										"type": "string",
+										"example": "12345"
+									}
+								}
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Create User",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "integer",
+											"example": 3
+										},
+										"firstName": {
+											"type": "string",
+											"example": "Liu"
+										},
+										"lastName": {
+											"type": "string",
+											"example": "Kang"
+										},
+										"email": {
+											"type": "string",
+											"format": "email",
+											"example": "kang@monk.com"
+										},
+										"password": {
+											"type": "string",
+											"example": "12345"
+										},
+										"posts": {
+											"type": "array",
+											"items": {
+												"type": "integer"
+											},
+											"example": [1, 7, 12]
+										}
+									},
+									"required": ["id", "firstName", "lastName", "email", "password"]
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			},
+			"delete": {
+				"operationId": "destroy_user",
 				"parameters": [
 					{
 						"in": "path",
@@ -26,42 +367,8 @@
 					}
 				],
 				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "integer"
-											},
-											"firstName": {
-												"type": "string"
-											},
-											"lastName": {
-												"type": "string"
-											},
-											"email": {
-												"type": "string"
-											},
-											"password": {
-												"type": "string"
-											},
-											"posts": {
-												"type": "array",
-												"items": {
-													"type": "integer"
-												}
-											}
-										},
-										"required": ["id", "firstName", "lastName", "email", "password"]
-									}
-								}
-							}
-						},
-						"description": ""
+					"204": {
+						"description": "No response body"
 					}
 				}
 			}
@@ -73,25 +380,32 @@
 				"type": "object",
 				"properties": {
 					"id": {
-						"type": "integer"
+						"type": "integer",
+						"example": 3
 					},
 					"firstName": {
-						"type": "string"
+						"type": "string",
+						"example": "Liu"
 					},
 					"lastName": {
-						"type": "string"
+						"type": "string",
+						"example": "Kang"
 					},
 					"email": {
-						"type": "string"
+						"type": "string",
+						"format": "email",
+						"example": "kang@monk.com"
 					},
 					"password": {
-						"type": "string"
+						"type": "string",
+						"example": "12345"
 					},
 					"posts": {
 						"type": "array",
 						"items": {
 							"type": "integer"
-						}
+						},
+						"example": [1, 7, 12]
 					}
 				},
 				"required": ["id", "firstName", "lastName", "email", "password"]
@@ -100,16 +414,21 @@
 				"type": "object",
 				"properties": {
 					"firstName": {
-						"type": "string"
+						"type": "string",
+						"example": "Liu"
 					},
 					"lastName": {
-						"type": "string"
+						"type": "string",
+						"example": "Kang"
 					},
 					"email": {
-						"type": "string"
+						"type": "string",
+						"format": "email",
+						"example": "kang@monk.com"
 					},
 					"password": {
-						"type": "string"
+						"type": "string",
+						"example": "12345"
 					}
 				},
 				"required": ["firstName", "lastName", "email", "password"]
@@ -118,22 +437,21 @@
 				"type": "object",
 				"properties": {
 					"firstName": {
-						"type": "string"
+						"type": "string",
+						"example": "Liu"
 					},
 					"lastName": {
-						"type": "string"
+						"type": "string",
+						"example": "Kang"
 					},
 					"email": {
-						"type": "string"
+						"type": "string",
+						"format": "email",
+						"example": "kang@monk.com"
 					},
 					"password": {
-						"type": "string"
-					},
-					"posts": {
-						"type": "array",
-						"items": {
-							"type": "integer"
-						}
+						"type": "string",
+						"example": "12345"
 					}
 				}
 			},
@@ -141,10 +459,13 @@
 				"type": "object",
 				"properties": {
 					"email": {
-						"type": "string"
+						"type": "string",
+						"format": "email",
+						"example": "kang@monk.com"
 					},
 					"password": {
-						"type": "string"
+						"type": "string",
+						"example": "12345"
 					}
 				},
 				"required": ["email", "password"]
