@@ -5,6 +5,7 @@
    "type": "commonjs",
    "author": "RimidalU",
    "devDependencies": {
+      "@types/cors": "^2.8.13",
       "@types/node": "^16.11.10",
       "ts-node": "10.7.0",
       "typescript": "4.5.2"
