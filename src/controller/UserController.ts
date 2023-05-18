@@ -1,10 +1,10 @@
 import { AppDataSource } from "../data-source"
 import { NextFunction, Request, Response } from "express"
-import { User } from "../entity/User"
+import { UserEntity } from "../entity/User"
 
 export class UserController {
 
-    private userRepository = AppDataSource.getRepository(User)
+    private userRepository = AppDataSource.getRepository(UserEntity)
 
     async all(request: Request, response: Response, next: NextFunction) {
         return this.userRepository.find()
@@ -27,7 +27,7 @@ export class UserController {
     async save(request: Request, response: Response, next: NextFunction) {
         const { firstName, lastName, age } = request.body;
 
-        const user = Object.assign(new User(), {
+        const user = Object.assign(new UserEntity(), {
             firstName,
             lastName,
             age
