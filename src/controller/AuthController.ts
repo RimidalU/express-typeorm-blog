@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
+import { UserController } from "./UserController";
 
 export class AuthController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
@@ -20,6 +21,11 @@ export class AuthController {
 
 	async signup(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password, posts } = request.body;
+
+		const isUserExist = await new UserController().findByEmail(email);
+		if (isUserExist === "unregistered user") {
+			return "user with this email already exists";
+		}
 
 		const user = Object.assign(new UserEntity(), {
 			firstName,
