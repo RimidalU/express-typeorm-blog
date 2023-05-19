@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken";
+import * as bcrypt from "bcrypt";
 
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
@@ -18,7 +19,9 @@ export class AuthController {
 			return "unregistered user";
 		}
 
-		if (user.password !== password) {
+		const isValidUser = await bcrypt.compare(password, user.password);
+
+		if (!isValidUser) {
 			return "unregistered user";
 		}
 
@@ -46,11 +49,14 @@ export class AuthController {
 			return "user with this email already exists";
 		}
 
+		const salt = await bcrypt.genSalt(10);
+		const passwordHash = await bcrypt.hash(password, salt);
+
 		const user = Object.assign(new UserEntity(), {
 			firstName,
 			lastName,
 			email,
-			password,
+			password: passwordHash,
 			posts,
 		});
 
