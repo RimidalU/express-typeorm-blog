@@ -54,6 +54,17 @@ export class AuthController {
 			posts,
 		});
 
-		return this.userRepository.save(user);
+		this.userRepository.save(user);
+		const token = jwt.sign(
+			{
+				email: email,
+				id: user.id,
+			},
+			process.env.SECRET_KEY
+		);
+		return {
+			success: true,
+			token,
+		};
 	}
 }
