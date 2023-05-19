@@ -7,7 +7,7 @@ import {
 	ManyToOne,
 } from "typeorm";
 import { UserEntity } from "./User";
-import { IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, IsUrl, MinLength, isURL } from "class-validator";
 
 @Entity()
 export class PostEntity {
@@ -23,6 +23,7 @@ export class PostEntity {
 	content: string;
 
 	@Column()
+	@IsUrl()
 	imageUrl: string;
 
 	@CreateDateColumn({ type: "timestamp" })
