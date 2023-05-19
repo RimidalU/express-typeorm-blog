@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
+import { IUserIdInRequest } from "../interfaces/interfaces";
 
 export class UserController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
@@ -38,6 +39,27 @@ export class UserController {
 		return user;
 	}
 
+	async getMe(request: IUserIdInRequest, response: Response, next: NextFunction) {
+			
+		const userId = request.userId;
+
+		const user = await this.userRepository.findOne({
+			where: { id: userId },
+		});
+
+		if (!user) {
+			return "unregistered user";
+		}
+		const { id, firstName, lastName, email, posts } = user;
+		return {
+			id,
+			firstName,
+			lastName,
+			email,
+			posts,
+		};
+	}
+
 	async save(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password } = request.body;
 
@@ -51,6 +73,7 @@ export class UserController {
 			lastName,
 			email,
 			password,
+			posts: []
 		});
 
 		return this.userRepository.save(user);

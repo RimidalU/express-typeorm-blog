@@ -57,7 +57,7 @@ export class AuthController {
 			lastName,
 			email,
 			password: passwordHash,
-			posts,
+			posts: [],
 		});
 
 		this.userRepository.save(user);

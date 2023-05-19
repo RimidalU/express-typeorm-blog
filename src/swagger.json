@@ -94,6 +94,30 @@
 				}
 			}
 		},
+		"/users/me": {
+			"get": {
+				"operationId": "get_me",
+				"tags": ["user"],
+				"description": "Signup",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/User"
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		},
 		"/users": {
 			"post": {
 				"operationId": "create_user",
