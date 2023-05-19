@@ -9,6 +9,7 @@ import { AppDataSource } from "./data-source";
 import { Routes } from "./routes";
 import { UserEntity } from "./entity/User";
 import { PostEntity } from "./entity/Post";
+import checkAuth from "./utils/checkAuth";
 
 AppDataSource.initialize()
 	.then(async () => {
@@ -20,14 +21,18 @@ AppDataSource.initialize()
 		app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 		// register express routes from defined application routes
 		Routes.forEach((route) => {
-			(app as any)[route.method](route.route, (req: Request, res: Response, next: Function) => {
-				const result = new (route.controller as any)()[route.action](req, res, next);
-				if (result instanceof Promise) {
-					result.then((result) => (result !== null && result !== undefined ? res.send(result) : undefined));
-				} else if (result !== null && result !== undefined) {
-					res.json(result);
+			(app as any)[route.method](
+				route.route,
+				route.checkAuth ? checkAuth : [],
+				(req: Request, res: Response, next: Function) => {
+					const result = new (route.controller as any)()[route.action](req, res, next);
+					if (result instanceof Promise) {
+						result.then((result) => (result !== null && result !== undefined ? res.send(result) : undefined));
+					} else if (result !== null && result !== undefined) {
+						res.json(result);
+					}
 				}
-			});
+			);
 		});
 
 		// setup express app here
