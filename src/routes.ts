@@ -5,13 +5,13 @@ import { AuthController } from "./controller/AuthController";
 export const Routes = [
 	//auth
 	{
-		method: "get",
+		method: "post",
 		route: "/auth/login",
 		controller: AuthController,
 		action: "login",
 	},
 	{
-		method: "get",
+		method: "post",
 		route: "/auth/signup",
 		controller: AuthController,
 		action: "signup",

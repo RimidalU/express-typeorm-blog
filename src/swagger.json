@@ -6,6 +6,94 @@
 		"description": "My blog API"
 	},
 	"paths": {
+		"/auth/login": {
+			"post": {
+				"operationId": "login",
+				"tags": ["auth"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Login"
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"$ref": "#/components/schemas/Login"
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/Login"
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Login",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		},
+		"/auth/signup": {
+			"post": {
+				"operationId": "signup",
+				"tags": ["auth"],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUser"
+							}
+						},
+						"application/x-www-form-urlencoded": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUser"
+							}
+						},
+						"multipart/form-data": {
+							"schema": {
+								"$ref": "#/components/schemas/CreateUser"
+							}
+						}
+					},
+					"required": true
+				},
+				"description": "Signup",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/AuthResponse"
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			}
+		},
 		"/users": {
 			"post": {
 				"operationId": "create_user",
@@ -14,77 +102,17 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"email": {
-										"type": "string",
-										"format": "email",
-										"example": "kang@monk.com"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								},
-								"required": ["firstName", "lastName", "email", "password"]
+								"$ref": "#/components/schemas/CreateUser"
 							}
 						},
 						"application/x-www-form-urlencoded": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"email": {
-										"type": "string",
-										"format": "email",
-										"example": "kang@monk.com"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								},
-								"required": ["firstName", "lastName", "email", "password"]
+								"$ref": "#/components/schemas/CreateUser"
 							}
 						},
 						"multipart/form-data": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"email": {
-										"type": "string",
-										"format": "email",
-										"example": "kang@monk.com"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								},
-								"required": ["firstName", "lastName", "email", "password"]
+								"$ref": "#/components/schemas/CreateUser"
 							}
 						}
 					},
@@ -101,38 +129,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "integer",
-											"example": 3
-										},
-										"firstName": {
-											"type": "string",
-											"example": "Liu"
-										},
-										"lastName": {
-											"type": "string",
-											"example": "Kang"
-										},
-										"email": {
-											"type": "string",
-											"format": "email",
-											"example": "kang@monk.com"
-										},
-										"password": {
-											"type": "string",
-											"example": "12345"
-										},
-										"posts": {
-											"type": "array",
-											"items": {
-												"type": "integer"
-											},
-											"example": [1, 7, 12]
-										}
-									},
-									"required": ["id", "firstName", "lastName", "email", "password"]
+									"$ref": "#/components/schemas/User"
 								}
 							}
 						},
@@ -168,38 +165,7 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "integer",
-												"example": 3
-											},
-											"firstName": {
-												"type": "string",
-												"example": "Liu"
-											},
-											"lastName": {
-												"type": "string",
-												"example": "Kang"
-											},
-											"email": {
-												"type": "string",
-												"format": "email",
-												"example": "kang@monk.com"
-											},
-											"password": {
-												"type": "string",
-												"example": "12345"
-											},
-											"posts": {
-												"type": "array",
-												"items": {
-													"type": "integer"
-												},
-												"example": [1, 7, 12]
-											}
-										},
-										"required": ["id", "firstName", "lastName", "email", "password"]
+										"$ref": "#/components/schemas/User"
 									}
 								}
 							}
@@ -225,65 +191,23 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								}
+								"$ref": "#/components/schemas/UpdateUser"
 							}
 						},
 						"application/x-www-form-urlencoded": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								}
+								"$ref": "#/components/schemas/UpdateUser"
 							}
 						},
 						"multipart/form-data": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"firstName": {
-										"type": "string",
-										"example": "Liu"
-									},
-									"lastName": {
-										"type": "string",
-										"example": "Kang"
-									},
-									"password": {
-										"type": "string",
-										"example": "12345"
-									}
-								}
+								"$ref": "#/components/schemas/UpdateUser"
 							}
 						}
 					},
 					"required": true
 				},
-				"description": "Create User",
+				"description": "Update User",
 				"security": [
 					{
 						"BearerAuth": []
@@ -328,53 +252,17 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"owner": {
-										"type": "integer"
-									},
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								},
-								"required": ["description", "owner"]
+								"$ref": "#/components/schemas/CreatePost"
 							}
 						},
 						"application/x-www-form-urlencoded": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"owner": {
-										"type": "integer"
-									},
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								},
-								"required": ["description", "owner"]
+								"$ref": "#/components/schemas/CreatePost"
 							}
 						},
 						"multipart/form-data": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"owner": {
-										"type": "integer"
-									},
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								},
-								"required": ["description", "owner"]
+								"$ref": "#/components/schemas/CreatePost"
 							}
 						}
 					},
@@ -391,32 +279,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "object",
-									"properties": {
-										"id": {
-											"type": "integer"
-										},
-										"owner": {
-											"type": "integer"
-										},
-										"content": {
-											"type": "string"
-										},
-										"imageUrl": {
-											"type": "string"
-										},
-										"createdAt": {
-											"type": "string",
-											"format": "date-time",
-											"example": "2017-07-21T17:32:28Z"
-										},
-										"updatedAt": {
-											"type": "string",
-											"format": "date-time",
-											"example": "2017-07-21T17:32:28Z"
-										}
-									},
-									"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
+									"$ref": "#/components/schemas/Post"
 								}
 							}
 						},
@@ -452,32 +315,7 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"type": "object",
-										"properties": {
-											"id": {
-												"type": "integer"
-											},
-											"owner": {
-												"type": "integer"
-											},
-											"content": {
-												"type": "string"
-											},
-											"imageUrl": {
-												"type": "string"
-											},
-											"createdAt": {
-												"type": "string",
-												"format": "date-time",
-												"example": "2017-07-21T17:32:28Z"
-											},
-											"updatedAt": {
-												"type": "string",
-												"format": "date-time",
-												"example": "2017-07-21T17:32:28Z"
-											}
-										},
-										"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
+										"$ref": "#/components/schemas/Post"
 									}
 								}
 							}
@@ -503,47 +341,23 @@
 					"content": {
 						"application/json": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								}
+								"$ref": "#/components/schemas/UpdatePost"
 							}
 						},
 						"application/x-www-form-urlencoded": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								}
+								"$ref": "#/components/schemas/UpdatePost"
 							}
 						},
 						"multipart/form-data": {
 							"schema": {
-								"type": "object",
-								"properties": {
-									"content": {
-										"type": "string"
-									},
-									"imageUrl": {
-										"type": "string"
-									}
-								}
+								"$ref": "#/components/schemas/UpdatePost"
 							}
 						}
 					},
 					"required": true
 				},
-				"description": "Create Post",
+				"description": "Update Post",
 				"security": [
 					{
 						"BearerAuth": []
@@ -690,12 +504,12 @@
 					"createdAt": {
 						"type": "string",
 						"format": "date-time",
-						"example": "2017-07-21T17:32:28Z"
+						"example": "2017-07-21T17:32:28.000Z"
 					},
 					"updatedAt": {
 						"type": "string",
 						"format": "date-time",
-						"example": "2017-07-21T17:32:28Z"
+						"example": "2017-07-21T17:32:28.000Z"
 					}
 				},
 				"required": ["id", "description", "imageUrl", "createdAt", "updatedAt", "owner"]
@@ -723,6 +537,19 @@
 					},
 					"imageUrl": {
 						"type": "string"
+					}
+				}
+			},
+			"AuthResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"example": "true"
+					},
+					"token": {
+						"type": "string",
+						"example": "NSwiaWF0IjoxNjg0NTA0MjQ0fQ.dYYjYCBInwdMpksa-8hFbWKEPq8Ap6ROSTUEczjwpT8eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC"
 					}
 				}
 			}

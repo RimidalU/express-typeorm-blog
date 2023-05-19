@@ -1,29 +1,48 @@
+import * as jwt from "jsonwebtoken";
+
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
-import { UserController } from "./UserController";
 
 export class AuthController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
 
 	async login(request: Request, response: Response, next: NextFunction) {
-		const id = parseInt(request.params.id);
+		const { email, password } = request.body;
 
 		const user = await this.userRepository.findOne({
-			where: { id },
+			where: { email },
 		});
 
 		if (!user) {
 			return "unregistered user";
 		}
-		return user;
+
+		if (user.password !== password) {
+			return "unregistered user";
+		}
+
+		const token = jwt.sign(
+			{
+				email: email,
+				id: user.id,
+			},
+			process.env.SECRET_KEY
+		);
+		return {
+			success: true,
+			token,
+		};
 	}
 
 	async signup(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password, posts } = request.body;
 
-		const isUserExist = await new UserController().findByEmail(email);
-		if (isUserExist === "unregistered user") {
+		const isUserExist = await this.userRepository.findOne({
+			where: { email },
+		});
+
+		if (isUserExist) {
 			return "user with this email already exists";
 		}
 
