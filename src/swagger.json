@@ -165,7 +165,7 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"$ref": "#/components/schemas/User"
+										"$ref": "#/components/schemas/PublicUser"
 									}
 								}
 							}
@@ -430,6 +430,23 @@
 					}
 				},
 				"required": ["id", "firstName", "lastName", "email", "password"]
+			},
+			"PublicUser": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"example": 3
+					},
+					"firstName": {
+						"type": "string",
+						"example": "Liu"
+					},
+					"lastName": {
+						"type": "string",
+						"example": "Kang"
+					}
+				}
 			},
 			"CreateUser": {
 				"type": "object",

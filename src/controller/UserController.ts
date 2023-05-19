@@ -6,20 +6,25 @@ export class UserController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
 
 	// async all(request: Request, response: Response, next: NextFunction) {
-	// 	return this.userRepository.find();
+	// 	return await this.userRepository.find();
 	// }
 
 	async one(request: Request, response: Response, next: NextFunction) {
-		const id = parseInt(request.params.id);
+		const userId = parseInt(request.params.id);
 
 		const user = await this.userRepository.findOne({
-			where: { id },
+			where: { id: userId },
 		});
 
 		if (!user) {
 			return "unregistered user";
 		}
-		return user;
+		const { id, firstName, lastName } = user;
+		return {
+			id,
+			firstName,
+			lastName,
+		};
 	}
 
 	async findByEmail(email: string) {
