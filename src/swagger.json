@@ -269,6 +269,49 @@
 			}
 		},
 		"/posts": {
+			"get": {
+				"operationId": "get_all_posts",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "offset",
+						"schema": {
+							"type": "integer"
+						},
+						"description": "The number of items to skip before starting to collect the result set."
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"schema": {
+							"type": "integer"
+						},
+						"description": "The numbers of items to return."
+					}
+				],
+				"tags": ["post"],
+				"description": "Get Post",
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"$ref": "#/components/schemas/PostResponse"
+									}
+								}
+							}
+						},
+						"description": ""
+					}
+				}
+			},
 			"post": {
 				"operationId": "create_post",
 				"tags": ["post"],
@@ -337,10 +380,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {
-										"$ref": "#/components/schemas/PostResponse"
-									}
+									"$ref": "#/components/schemas/PostResponse"
 								}
 							}
 						},
@@ -601,10 +641,6 @@
 						"type": "integer",
 						"example": 12
 					},
-					"owner": {
-						"type": "integer",
-						"example": "Liu Kang"
-					},
 					"content": {
 						"type": "string",
 						"example": "Content Example..."
@@ -622,6 +658,23 @@
 						"type": "string",
 						"format": "date-time",
 						"example": "2017-07-21T17:32:28.000Z"
+					},
+					"owner": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "integer",
+								"example": 12
+							},
+							"firstName": {
+								"type": "string",
+								"example": "Liu"
+							},
+							"lastName": {
+								"type": "string",
+								"example": "Kang"
+							}
+						}
 					}
 				}
 			}

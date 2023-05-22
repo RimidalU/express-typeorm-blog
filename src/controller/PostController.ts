@@ -7,7 +7,17 @@ export class PostController {
 	private postRepository = AppDataSource.getRepository(PostEntity);
 
 	async all(request: Request, response: Response, next: NextFunction) {
-		return response.send(this.postRepository.find());
+		const { limit = 20, offset = 0 } = request.query;
+
+		const users = await AppDataSource.getRepository(PostEntity)
+			.createQueryBuilder("post")
+			.leftJoinAndSelect("post.owner", "owner")
+			.select(["post", "owner.id", "owner.firstName", "owner.lastName"])
+			.skip(+offset)
+			.take(+limit)
+			.getMany();
+
+		return users;
 	}
 
 	async one(request: Request, response: Response, next: NextFunction) {
