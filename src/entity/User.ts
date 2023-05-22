@@ -26,9 +26,6 @@ export class UserEntity {
 	email: string;
 
 	@Column()
-	@Length(5, 20, {
-		message: "Password is too short (min 5 symbols)",
-	})
 	password: string;
 
 	@OneToMany(() => PostEntity, (post: PostEntity) => post.owner)

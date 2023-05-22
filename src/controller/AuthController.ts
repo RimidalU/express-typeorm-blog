@@ -4,6 +4,7 @@ import * as bcrypt from "bcrypt";
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
+import { validate } from "class-validator";
 
 export class AuthController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
@@ -41,6 +42,11 @@ export class AuthController {
 	async signup(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password, posts } = request.body;
 
+		if (password.length < 5) {
+			return "Password is too short (min 5 symbols)";
+			next()
+		}
+
 		const isUserExist = await this.userRepository.findOne({
 			where: { email },
 		});
@@ -60,17 +66,22 @@ export class AuthController {
 			posts: [],
 		});
 
-		this.userRepository.save(user);
-		const token = jwt.sign(
-			{
-				email: email,
-				id: user.id,
-			},
-			process.env.SECRET_KEY
-		);
-		return {
-			success: true,
-			token,
-		};
+		const errors = await validate(user);
+		if (errors.length > 0) {
+			return errors[0].constraints;
+		} else {
+			this.userRepository.save(user);
+			const token = jwt.sign(
+				{
+					email: email,
+					id: user.id,
+				},
+				process.env.SECRET_KEY
+			);
+			return {
+				success: true,
+				token,
+			};
+		}
 	}
 }

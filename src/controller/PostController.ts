@@ -2,6 +2,7 @@ import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { PostEntity } from "../entity/Post";
 import { IUserIdInRequest } from "../interfaces/interfaces";
+import { validate } from "class-validator";
 
 export class PostController {
 	private postRepository = AppDataSource.getRepository(PostEntity);
@@ -47,8 +48,12 @@ export class PostController {
 			imageUrl,
 			owner: { id: userId },
 		});
-
-		return response.send(await this.postRepository.save(post));
+		const errors = await validate(post);
+		if (errors.length > 0) {
+			return errors[0].constraints;
+		} else {
+			return response.send(await this.postRepository.save(post));
+		}
 	}
 
 	async update(request: IUserIdInRequest, response: Response, next: NextFunction) {
