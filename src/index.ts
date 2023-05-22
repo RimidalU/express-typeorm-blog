@@ -2,7 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as swaggerUi from "swagger-ui-express";
-import * as swaggerDocument from "./swagger.json";
+import * as multer from 'multer'
 
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
@@ -10,6 +10,10 @@ import { Routes } from "./routes";
 // import { UserEntity } from "./entity/User";
 // import { PostEntity } from "./entity/Post";
 import checkAuth from "./utils/checkAuth";
+import { filesStorage } from "./utils/storage";
+import * as swaggerDocument from "./swagger.json";
+
+const upload = multer({ storage: filesStorage });
 
 AppDataSource.initialize()
 	.then(async () => {
@@ -24,6 +28,7 @@ AppDataSource.initialize()
 			(app as any)[route.method](
 				route.route,
 				route.checkAuth ? checkAuth : [],
+				route.uploads ? upload.single('upload') : [],
 				(req: Request, res: Response, next: Function) => {
 					const result = new (route.controller as any)()[route.action](req, res, next);
 					if (result instanceof Promise) {

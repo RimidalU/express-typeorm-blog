@@ -1,6 +1,7 @@
 import { UserController } from "./controller/UserController";
 import { PostController } from "./controller/PostController";
 import { AuthController } from "./controller/AuthController";
+import { FileController } from "./controller/FileControllr";
 
 export const Routes = [
 	//auth
@@ -91,5 +92,14 @@ export const Routes = [
 		controller: PostController,
 		action: "remove",
 		checkAuth: true,
+	},
+	//files
+	{
+		method: "post",
+		route: "/uploads",
+		controller: FileController,
+		action: "addFile",
+		checkAuth: true,
+		uploads: true,
 	},
 ];

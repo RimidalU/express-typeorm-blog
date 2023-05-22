@@ -457,6 +457,50 @@
 					}
 				}
 			}
+		},
+		"/uploads": {
+			"post": {
+				"operationId": "upload_file",
+				"tags": ["file"],
+				"summary": "upload multimedia file",
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"upload": {
+										"type": "string",
+										"format": "binary"
+									},
+									"postId": {
+										"type": "number",
+										"example": 3
+									}
+								},
+								"required": ["upload", "postId"]
+							}
+						}
+					}
+				},
+				"security": [
+					{
+						"BearerAuth": []
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/FilehResponse"
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	},
 	"components": {
@@ -675,6 +719,19 @@
 								"example": "Kang"
 							}
 						}
+					}
+				}
+			},
+			"FilehResponse": {
+				"type": "object",
+				"properties": {
+					"success": {
+						"type": "boolean",
+						"example": "true"
+					},
+					"imageUrl": {
+						"type": "string",
+						"example": "d348491e9d7f9fd268.jpg"
 					}
 				}
 			}
