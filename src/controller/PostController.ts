@@ -51,9 +51,19 @@ export class PostController {
 		return response.send(await this.postRepository.save(post));
 	}
 
-	async update(request: Request, response: Response, next: NextFunction) {
+	async update(request: IUserIdInRequest, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
+		const userId = request.userId;
 		const { content, imageUrl } = request.body;
+
+		const currentPost = await this.postRepository.findOne({
+			where: { id },
+			relations: ["owner"],
+		});
+
+		if (userId !== currentPost.owner.id) {
+			return "no access";
+		}
 
 		const newPost = await this.postRepository.update(id, {
 			content,
@@ -62,13 +72,18 @@ export class PostController {
 		return newPost.affected ? "post has been updated" : "this post not updated";
 	}
 
-	async remove(request: Request, response: Response, next: NextFunction) {
+	async remove(request: IUserIdInRequest, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
+		const userId = request.userId;
 
 		let postToRemove = await this.postRepository.findOneBy({ id });
 
 		if (!postToRemove) {
 			return "this post not exist";
+		}
+
+		if (userId !== postToRemove.owner.id) {
+			return "no access";
 		}
 
 		await this.postRepository.remove(postToRemove);
