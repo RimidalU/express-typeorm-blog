@@ -23,17 +23,18 @@ export class PostController {
 	async one(request: Request, response: Response, next: NextFunction) {
 		const id = parseInt(request.params.id);
 
-		const post = await this.postRepository.findOne({
-			where: { id },
-			relations: ["owner"],
-		});
+		const post = await AppDataSource.getRepository(PostEntity)
+			.createQueryBuilder("post")
+			.where("post.id = :id", { id })
+			.leftJoinAndSelect("post.owner", "owner")
+			.select(["post", "owner.id", "owner.firstName", "owner.lastName"])
+			.getOne();
 
 		if (!post) {
 			return "unregistered post";
 		}
-		const ownerName = `${post.owner.firstName} ${post.owner.lastName}`;
 
-		return { ...post, owner: ownerName };
+		return post;
 	}
 
 	async save(request: IUserIdInRequest, response: Response, next: NextFunction) {
