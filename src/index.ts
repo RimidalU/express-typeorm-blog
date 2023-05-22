@@ -2,7 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as cors from "cors";
 import * as swaggerUi from "swagger-ui-express";
-import * as multer from 'multer'
+import * as multer from "multer";
 
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
@@ -21,14 +21,15 @@ AppDataSource.initialize()
 		const app = express();
 		app.use(cors());
 		app.use(bodyParser.json());
-
+		app.use("/uploads", express.static("uploads"));
+		
 		app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 		// register express routes from defined application routes
 		Routes.forEach((route) => {
 			(app as any)[route.method](
 				route.route,
 				route.checkAuth ? checkAuth : [],
-				route.uploads ? upload.single('upload') : [],
+				route.uploads ? upload.single("upload") : [],
 				(req: Request, res: Response, next: Function) => {
 					const result = new (route.controller as any)()[route.action](req, res, next);
 					if (result instanceof Promise) {
