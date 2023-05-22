@@ -1,7 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { PostEntity } from "./Post";
-import { IsArray, IsEmail, IsNotEmpty } from "class-validator";
-import { IsStrongPassword } from "class-validator";
+import { IsArray, IsEmail, IsNotEmpty, Length } from "class-validator";
 import { MinLength } from "class-validator";
 
 @Entity()
@@ -27,12 +26,12 @@ export class UserEntity {
 	email: string;
 
 	@Column()
-	@IsStrongPassword({ minLength: 5 },  {
+	@Length(5, 20, {
 		message: "Password is too short (min 5 symbols)",
 	})
 	password: string;
 
 	@OneToMany(() => PostEntity, (post: PostEntity) => post.owner)
-    @IsArray()
+	@IsArray()
 	posts: PostEntity[];
 }

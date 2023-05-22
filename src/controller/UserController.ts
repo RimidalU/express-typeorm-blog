@@ -2,6 +2,7 @@ import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
 import { IUserIdInRequest } from "../interfaces/interfaces";
+import { ValidationError, validate } from "class-validator";
 
 export class UserController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
@@ -40,7 +41,6 @@ export class UserController {
 	}
 
 	async getMe(request: IUserIdInRequest, response: Response, next: NextFunction) {
-			
 		const userId = request.userId;
 
 		const user = await this.userRepository.findOne({
@@ -63,8 +63,10 @@ export class UserController {
 	async save(request: Request, response: Response, next: NextFunction) {
 		const { firstName, lastName, email, password } = request.body;
 
-		const isUserExist = await this.findByEmail(email);
-		if (isUserExist === "unregistered user") {
+		const isUserExist = await this.userRepository.findOne({
+			where: { email },
+		});
+		if (isUserExist) {
 			return "user with this email already exists";
 		}
 
@@ -73,10 +75,21 @@ export class UserController {
 			lastName,
 			email,
 			password,
-			posts: []
+			posts: [],
 		});
 
-		return this.userRepository.save(user);
+		const errors = await validate(user);
+
+		if (errors.length > 0) {
+			return response.status(422).json({
+				message: "This user not created",
+			});
+		} else {
+			await this.userRepository.save(user);
+			return response.status(201).json({
+				message: "This user created",
+			});
+		}
 	}
 
 	async update(request: Request, response: Response, next: NextFunction) {

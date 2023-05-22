@@ -339,7 +339,7 @@
 								"schema": {
 									"type": "array",
 									"items": {
-										"$ref": "#/components/schemas/Post"
+										"$ref": "#/components/schemas/PostResponse"
 									}
 								}
 							}
@@ -591,6 +591,37 @@
 					"token": {
 						"type": "string",
 						"example": "NSwiaWF0IjoxNjg0NTA0MjQ0fQ.dYYjYCBInwdMpksa-8hFbWKEPq8Ap6ROSTUEczjwpT8eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVC"
+					}
+				}
+			},
+			"PostResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"example": 12
+					},
+					"owner": {
+						"type": "integer",
+						"example": "Liu Kang"
+					},
+					"content": {
+						"type": "string",
+						"example": "Content Example..."
+					},
+					"imageUrl": {
+						"type": "string",
+						"example": "w3dfdgs.png"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2017-07-21T17:32:28.000Z"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time",
+						"example": "2017-07-21T17:32:28.000Z"
 					}
 				}
 			}

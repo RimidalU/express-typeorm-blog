@@ -1,6 +1,7 @@
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { PostEntity } from "../entity/Post";
+import { IUserIdInRequest } from "../interfaces/interfaces";
 
 export class PostController {
 	private postRepository = AppDataSource.getRepository(PostEntity);
@@ -14,25 +15,29 @@ export class PostController {
 
 		const post = await this.postRepository.findOne({
 			where: { id },
+			relations: ["owner"],
 		});
 
 		if (!post) {
 			return "unregistered post";
 		}
-		return post;
+		const ownerName = `${post.owner.firstName} ${post.owner.lastName}`;
+
+		return { ...post, owner: ownerName };
 	}
 
-	async save(request: Request, response: Response, next: NextFunction) {
-		const { content, imageUrl, createdDate, updatedDate } = request.body;
+	async save(request: IUserIdInRequest, response: Response, next: NextFunction) {
+		const userId = request.userId;
+
+		const { content, imageUrl } = request.body;
 
 		const post = Object.assign(new PostEntity(), {
 			content,
 			imageUrl,
-			createdDate,
-			updatedDate,
+			owner: { id: userId },
 		});
 
-		return response.send(this.postRepository.save(post));
+		return response.send(await this.postRepository.save(post));
 	}
 
 	async update(request: Request, response: Response, next: NextFunction) {
