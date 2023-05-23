@@ -45,6 +45,7 @@ Database with authorization and with the ability to add, delete and edit posts. 
 ## How To Use
 
 Run [Live Demo](https://express-typeorm-blog.onrender.com/swagger/)
+> The server is on a free hosting, the response time is indecently long (once it took me almost a minute (( )
 
 1. Create user
 2. Login with created user
@@ -64,6 +65,7 @@ To do:
 
 Improvement:
 - [ ] Add Next client
+- [ ] Move the application to a faster server
 
 ## License
 
