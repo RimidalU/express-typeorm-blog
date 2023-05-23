@@ -45,6 +45,7 @@ export class UserController {
 
 		const user = await this.userRepository.findOne({
 			where: { id: userId },
+			relations: ['posts']
 		});
 
 		if (!user) {

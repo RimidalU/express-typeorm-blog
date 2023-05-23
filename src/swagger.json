@@ -109,7 +109,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/User"
+									"$ref": "#/components/schemas/MeResponse"
 								}
 							}
 						},
@@ -734,6 +734,59 @@
 						"example": "d348491e9d7f9fd268.jpg"
 					}
 				}
+			},
+			"MeResponse": {
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"example": 3
+					},
+					"firstName": {
+						"type": "string",
+						"example": "Liu"
+					},
+					"lastName": {
+						"type": "string",
+						"example": "Kang"
+					},
+					"email": {
+						"type": "string",
+						"format": "email",
+						"example": "kang@monk.com"
+					},
+					"posts": {
+						"type": "array",
+						"items": {
+							"type": "object",
+							"properties": {
+								"id": {
+									"type": "integer",
+									"example": 12
+								},
+								"content": {
+									"type": "string",
+									"example": "Content Example..."
+								},
+								"imageUrl": {
+									"type": "string",
+									"example": "w3dfdgs.png"
+								},
+								"createdAt": {
+									"type": "string",
+									"format": "date-time",
+									"example": "2017-07-21T17:32:28.000Z"
+								},
+								"updatedAt": {
+									"type": "string",
+									"format": "date-time",
+									"example": "2017-07-21T17:32:28.000Z"
+								}
+							}
+						}
+					}
+				},
+				"required": ["id", "firstName", "lastName", "email", "password"]
 			}
 		},
 		"securitySchemes": {
