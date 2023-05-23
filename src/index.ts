@@ -1,8 +1,8 @@
-import * as express from "express";
+const express = require("express");
 import * as bodyParser from "body-parser";
-import * as cors from "cors";
+const cors = require("cors");
 import * as swaggerUi from "swagger-ui-express";
-import * as multer from "multer";
+const multer  = require('multer')
 
 import { Request, Response } from "express";
 import { AppDataSource } from "./data-source";
@@ -22,7 +22,7 @@ AppDataSource.initialize()
 		app.use(cors());
 		app.use(bodyParser.json());
 		app.use("/uploads", express.static("uploads"));
-		
+
 		app.use("/swagger", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 		// register express routes from defined application routes
 		Routes.forEach((route) => {
