@@ -1,7 +1,9 @@
+import { IsArray, IsEmail, IsNotEmpty } from "class-validator";
+import { MinLength } from "class-validator";
+
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
 import { PostEntity } from "./Post";
-import { IsArray, IsEmail, IsNotEmpty, Length } from "class-validator";
-import { MinLength } from "class-validator";
+
 
 @Entity()
 export class UserEntity {

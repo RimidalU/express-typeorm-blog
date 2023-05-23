@@ -1,7 +1,8 @@
 import { NextFunction, Response } from "express";
-import { IUserIdInRequest } from "../interfaces/interfaces";
 import { AppDataSource } from "../data-source";
 import { PostEntity } from "../entity/Post";
+
+import { IUserIdInRequest } from "../interfaces/interfaces";
 
 export class FileController {
 	private postRepository = AppDataSource.getRepository(PostEntity);

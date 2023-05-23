@@ -1,3 +1,5 @@
+import { IsNotEmpty, IsString, IsUrl, MinLength } from "class-validator";
+
 import {
 	Entity,
 	PrimaryGeneratedColumn,
@@ -7,7 +9,6 @@ import {
 	ManyToOne,
 } from "typeorm";
 import { UserEntity } from "./User";
-import { IsNotEmpty, IsString, IsUrl, MinLength, isURL } from "class-validator";
 
 @Entity()
 export class PostEntity {

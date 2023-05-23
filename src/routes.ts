@@ -17,14 +17,6 @@ export const Routes = [
 		controller: AuthController,
 		action: "signup",
 	},
-	//users
-	// {
-	// 	method: "get",
-	// 	route: "/users",
-	// 	controller: UserController,
-	// 	action: "all",
-	// 	checkAuth: true
-	// },
 	{
 		method: "get",
 		route: "/users/me",

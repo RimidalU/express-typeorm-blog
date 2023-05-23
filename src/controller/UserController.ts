@@ -1,15 +1,13 @@
+import { validate } from "class-validator";
+
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
+
 import { IUserIdInRequest } from "../interfaces/interfaces";
-import { ValidationError, validate } from "class-validator";
 
 export class UserController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
-
-	// async all(request: Request, response: Response, next: NextFunction) {
-	// 	return await this.userRepository.find();
-	// }
 
 	async one(request: Request, response: Response, next: NextFunction) {
 		const userId = parseInt(request.params.id);
@@ -45,7 +43,7 @@ export class UserController {
 
 		const user = await this.userRepository.findOne({
 			where: { id: userId },
-			relations: ['posts']
+			relations: ["posts"],
 		});
 
 		if (!user) {

@@ -1,8 +1,10 @@
+import { validate } from "class-validator";
+
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { PostEntity } from "../entity/Post";
+
 import { IUserIdInRequest } from "../interfaces/interfaces";
-import { validate } from "class-validator";
 
 export class PostController {
 	private postRepository = AppDataSource.getRepository(PostEntity);
@@ -34,7 +36,6 @@ export class PostController {
 		if (!post) {
 			return "unregistered post";
 		}
-
 		return post;
 	}
 

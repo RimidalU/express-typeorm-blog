@@ -1,10 +1,10 @@
 import * as jwt from "jsonwebtoken";
 import * as bcrypt from "bcrypt";
+import { validate } from "class-validator";
 
 import { AppDataSource } from "../data-source";
 import { NextFunction, Request, Response } from "express";
 import { UserEntity } from "../entity/User";
-import { validate } from "class-validator";
 
 export class AuthController {
 	private userRepository = AppDataSource.getRepository(UserEntity);
@@ -44,7 +44,7 @@ export class AuthController {
 
 		if (password.length < 5) {
 			return "Password is too short (min 5 symbols)";
-			next()
+			next();
 		}
 
 		const isUserExist = await this.userRepository.findOne({

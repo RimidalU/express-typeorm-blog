@@ -6,5 +6,5 @@ export interface IJwtPayload {
 }
 
 export interface IUserIdInRequest extends Request {
-	userId: number
-  }
+	userId: number;
+}

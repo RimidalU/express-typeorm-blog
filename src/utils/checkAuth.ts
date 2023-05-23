@@ -1,4 +1,5 @@
 import * as jwt from "jsonwebtoken";
+
 import { IJwtPayload } from "../interfaces/interfaces";
 
 export default (req, res, next) => {
